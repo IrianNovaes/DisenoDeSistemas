@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Crea una nueva Venta</title>
+</head>
+<body>
+    <div align="center">
+        <h1>Crear una nueva Venta</h1>
+        <br />
+        <table>
+            <tbody>
+                <tr>
+                    <th><a href="/tienda">Volver al menú pricipal</a></th>
+                    <th>&nbsp;</th>
+                    <th><a href="/tienda/ventas/list">Volver</a></th>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <form action="#" th:action="@{/tienda/ventas/save}"
+            th:object="${venta}" method="post">
+
+            <table border="0" cellpadding="10">
+               
+<!--                <tr> -->
+<!--                     <td>Tipo de Venta:</td> -->
+<!--                     <td th:object="${clientes}> -->
+<!--                         <select id="tipo" name="tipo" th:field="*{tipo}"> -->
+<!--                             <option value="">Elija un Tipo</option> -->
+<!--                             <option value="efectivo"> Efectivo </option> -->
+<!--                             <option value="tarjeta"> Tarjeta </option> -->
+<!--                         </select> -->
+<!--                     </td> -->
+<!--                 </tr> -->
+               
+                 <tr>
+                    <td>Cuotas:</td>
+                    <td><input type="number" th:field="*{cuotas}" /></td>
+                </tr>
+                
+                <tr>
+                    <td>Fecha:</td>
+                    <td><input type="date" th:field="*{fecha}" /></td>
+                </tr>
+                
+                
+                <tr>
+                    <td>Clientes:</td>
+                    <td th:object="${clientes}">
+                        <select id="cliente" name="cliente">
+                            <option value="">Elija un Cliente</option>
+                            <option th:each="cliente : ${clientes}"
+                                    th:value="${cliente}"
+                                    th:text="${cliente.nombre}">
+                            </option>
+                        </select>
+                    </td>
+                </tr>     
+                
+                <table border="0" padding="10">
+                    <thead>
+					 <tr>
+                    	<td>Items:</td>
+                    	<td><a href="/tienda/items/new">Crear Item</a></td>
+                		</tr>
+						<tr>
+						<th>ID</th>
+						<th>Cantidad</th>
+						<th>Prenda</th>
+						<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item : ${items}">
+						<td th:text="${item.id}">Venta ID</td>
+						<td th:text="${item.cantidad}">Cantidad</td>
+						<td th:text="${item.prenda.descripcion}">Prenda</td>						
+						<td><a th:href="@{'/tienda/items/edit/' +
+						${venta.id}}">Editar</a>
+						&nbsp;&nbsp;&nbsp;
+						<a th:href="@{'/tienda/items/delete/' +
+						${venta.id}}">Borrar</a>
+						</td>
+						</tr>
+					</tbody>
+					</table>        
+             
+                <tr>
+                    <td colspan="2"><button type="submit">Grabar</button></td>
+                </tr>
+            </table>
+            
+        </form>
+    </div>
+</body>
+</html>
